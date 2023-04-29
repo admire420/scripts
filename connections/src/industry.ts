@@ -1,5 +1,8 @@
 // INDUSTRY
 
+// US Govt Industry Division
+// www.bls.gov/iag/tgs/iag_index_naics.htm
+
 // https://growcombine.com/clients/
 export const GROW_COMBINE_INDUSTRY = [
    "FINANCE",
@@ -19,7 +22,6 @@ export const GROW_COMBINE_INDUSTRY = [
    "LOGISTICS",
 ];
 
-// sectors field of
 // https://www.investindia.gov.in/contact-us
 export const INVEST_INDIA_INDUSTRY = [
    "Airport",
@@ -104,55 +106,103 @@ export const IBEF_INDUSTRY = [
    "Tourism and Hospitality",
 ];
 
+// Filtered List of Industries
 export const IBEF_INDUSTRY_FILTERED = [
-   "Agriculture-and-Allied-Industry",
-   "Auto-Component",
+   "Agriculture and Allied Industry",
+   "Auto Component",
    "Automobile",
    "Aviation",
    "Banking",
    "Biotechnology",
    "Cement",
    "Chemical",
-   "Consumer-Durable",
-   "Defence-Manufacturing",
+   "Consumer Durable",
+   "Defence Manufacturing",
    "E-Commerce",
-   "Education-and-Training",
-   "Electronic-System-Design-and-Manufacturing",
-   "Engineering-and-Capital-Good",
+   "Education and Training",
+   "Electronic System Design and Manufacturing",
+   "Engineering and Capital Good",
    "FMCG",
-   "Financial-Service",
-   "Gem-and-Jewellery",
+   "Financial Service",
+   "Gem and Jewellery",
    "Healthcare",
-   "IT-and-BPM",
+   "IT and BPM",
    "Infrastructure",
    "Insurance",
    "MSME",
    "Manufacturing",
-   "Media-and-Entertainment",
-   "Medical-Device",
-   "Metal-and-Mining",
-   "Oil-and-Gas",
+   "Media and Entertainment",
+   "Medical Device",
+   "Metal and Mining",
+   "Oil and Gas",
    "Pharmaceutical",
    "Port",
    "Power",
    "Railway",
-   "Real-Estate",
-   "Renewable-Energy",
+   "Real Estate",
+   "Renewable Energy",
    "Retail",
    "Road",
-   "Science-and-Technology",
+   "Science and Technology",
    "Service",
    "Steel",
    "Telecommunication",
    "Textile",
-   "Tourism-and-Hospitality",
+   "Tourism and Hospitality",
 ];
 
 const SPECIAL_ADDITIONS = ["Non-profit Organisation", "Logistic"];
 
-const ADMIRE_INDUSTRY = IBEF_INDUSTRY.concat(SPECIAL_ADDITIONS);
+const ADMIRE_INDUSTRY = IBEF_INDUSTRY_FILTERED.concat(SPECIAL_ADDITIONS);
 
 export default ADMIRE_INDUSTRY;
+
+// --Current Output
+// [
+//   'Agriculture and Allied Industry',
+//   'Auto Component',
+//   'Automobile',
+//   'Aviation',
+//   'Banking',
+//   'Biotechnology',
+//   'Cement',
+//   'Chemical',
+//   'Consumer Durable',
+//   'Defence Manufacturing',
+//   'E-Commerce',
+//   'Education and Training',
+//   'Electronic System Design and Manufacturing',
+//   'Engineering and Capital Good',
+//   'FMCG',
+//   'Financial Service',
+//   'Gem and Jewellery',
+//   'Healthcare',
+//   'IT and BPM',
+//   'Infrastructure',
+//   'Insurance',
+//   'Logistic',
+//   'MSME',
+//   'Manufacturing',
+//   'Media and Entertainment',
+//   'Medical Device',
+//   'Metal and Mining',
+//   'Non-Profit Organisation',
+//   'Oil and Gas',
+//   'Pharmaceutical',
+//   'Port',
+//   'Power',
+//   'Railway',
+//   'Real Estate',
+//   'Renewable Energy',
+//   'Retail',
+//   'Road',
+//   'Science and Technology',
+//   'Service',
+//   'Steel',
+//   'Telecommunication',
+//   'Textile',
+//   'Tourism and Hospitality'
+// ]
 
 // -- FMCG
 // More Info On Sub Sector

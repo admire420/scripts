@@ -111,7 +111,7 @@ const toSingularTitleCase = (data: string[]): string[] => {
    return convertedArray.sort();
 };
 
-// convertToUpperCase(industries).forEach((item, index, arr) => {
+// toSingularTitleCase(industries).forEach((item, index, arr) => {
 //    console.log(item);
 // });
 
