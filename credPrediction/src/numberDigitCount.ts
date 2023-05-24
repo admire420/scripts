@@ -1,3 +1,5 @@
+import { WINNING_BIDS } from "./constants";
+
 type countType = {
    [digitPositionKey: number]: { [numberKey: number]: number };
 };
@@ -23,10 +25,4 @@ const numberDigitCount = (numbers: number[]) => {
    return count;
 };
 
-console.log(
-   numberDigitCount([
-      4574, 3735, 5586, 2668, 5685, 5355, 6152, 2320, 1656, 2067, 3708, 5254,
-      2615, 3968, 4046, 5122, 1559, 3024, 1686, 3660, 3203, 4068, 4465, 2440,
-      4306, 4704, 1828, 5453, 1613, 3967,
-   ])
-);
+export default numberDigitCount(WINNING_BIDS);

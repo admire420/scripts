@@ -1,4 +1,6 @@
 const fs = require("fs");
+import numberDigitCount from "./numberDigitCount";
+
 type count = {
    [key: number]: number;
 };
@@ -39,11 +41,11 @@ const array4 = [4, 5, 6, 8];
 const result = allCombinations(array1, array2, array3, array4);
 console.log(result.length);
 console.log("number of cards to draw :" + result.length / 6);
-fs.writeFile("results.json", JSON.stringify(result), (err: string) => {
-   if (err) {
-      console.error(err);
-   }
-});
+// fs.writeFile("results.json", JSON.stringify(result), (err: string) => {
+//    if (err) {
+//       console.error(err);
+//    }
+// });
 
 // chatGPT:
 
@@ -282,3 +284,5 @@ fs.writeFile("results.json", JSON.stringify(result), (err: string) => {
 // 4597
 // 5147
 // 5882
+
+console.log(numberDigitCount);
