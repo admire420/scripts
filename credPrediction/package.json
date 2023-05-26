@@ -1,6 +1,6 @@
 {
    "scripts": {
-      "dev": "nodemon ./src/index.ts"
+      "dev": "nodemon --ignore 'results.json' ./src/index.ts"
    },
    "devDependencies": {
       "@types/node": "^18.16.1",

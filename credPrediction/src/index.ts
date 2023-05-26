@@ -17,10 +17,21 @@ const allCombinations = (
          array3.forEach((item3) => {
             if (!(item3 == item1 && item3 == item2)) {
                array4.forEach((item4) => {
+                  // avoid 1333, 3133, 3313, 1133, 1331, 3300, 3003,
+                  // avoid if all the numbers are even
                   if (
                      !(
                         (item4 == item3 && item4 == item2) ||
-                        (item4 == item3 && item4 == item1)
+                        (item4 == item3 && item4 == item1) ||
+                        (item1 == item2 && item4 == item1) ||
+                        (item1 == item2 && item3 == item4) ||
+                        (item1 == item4 && item3 == item2) ||
+                        (item3 == 0 && item4 == 0) ||
+                        (item2 == 0 && item3 == 0) ||
+                        (item1 % 2 == 0 &&
+                           item2 % 2 == 0 &&
+                           item3 % 2 == 0 &&
+                           item4 % 2 == 0)
                      )
                   ) {
                      hold.push([item1, item2, item3, item4]);
@@ -33,19 +44,19 @@ const allCombinations = (
    return hold;
 };
 
-const array1 = [1, 2, 3, 4, 5];
-const array2 = [0, 6];
-const array3 = [0, 1, 5, 6];
-const array4 = [4, 5, 6, 8];
+const array1 = [2];
+const array2 = [0, 4, 5, 6, 7];
+const array3 = [0, 4, 5, 6];
+const array4 = [0, 4, 5, 6, 8];
 
 const result = allCombinations(array1, array2, array3, array4);
 console.log(result.length);
 console.log("number of cards to draw :" + result.length / 6);
-// fs.writeFile("results.json", JSON.stringify(result), (err: string) => {
-//    if (err) {
-//       console.error(err);
-//    }
-// });
+fs.writeFileSync("results.json", JSON.stringify(result), (err: string) => {
+   if (err) {
+      console.error(err);
+   }
+});
 
 // chatGPT:
 
@@ -285,4 +296,4 @@ console.log("number of cards to draw :" + result.length / 6);
 // 5147
 // 5882
 
-console.log(numberDigitCount);
+// console.log(numberDigitCount);
