@@ -1,5 +1,6 @@
 const fs = require("fs");
 import numberDigitCount from "./numberDigitCount";
+import { LATEST_WIN } from "./constants";
 
 type count = {
    [key: number]: number;
@@ -17,8 +18,8 @@ const allCombinations = (
          array3.forEach((item3) => {
             if (!(item3 == item1 && item3 == item2)) {
                array4.forEach((item4) => {
-                  // avoid 1333, 3133, 3313, 1133, 1331, 3300, 3003,
-                  // avoid if all the numbers are even
+                  // avoid 1333, 3133, 3313, 1133, 1331
+
                   if (
                      !(
                         (item4 == item3 && item4 == item2) ||
@@ -26,12 +27,44 @@ const allCombinations = (
                         (item1 == item2 && item4 == item1) ||
                         (item1 == item2 && item3 == item4) ||
                         (item1 == item4 && item3 == item2) ||
+                        // avoid if 3300, 3003
                         (item3 == 0 && item4 == 0) ||
                         (item2 == 0 && item3 == 0) ||
+                        // avoid if all the numbers are even
                         (item1 % 2 == 0 &&
                            item2 % 2 == 0 &&
                            item3 % 2 == 0 &&
-                           item4 % 2 == 0)
+                           item4 % 2 == 0) ||
+                        // avoid if all the numbers are odd
+                        (item1 % 2 != 0 &&
+                           item2 % 2 != 0 &&
+                           item3 % 2 != 0 &&
+                           item4 % 2 != 0) ||
+                        // avoid if any 3 or more digits are consecutively incresing in order 3451, 2123, 3456
+                        (item1 + 1 == item2 && item2 + 1 == item3) ||
+                        (item2 + 1 == item3 && item3 + 1 == item4) ||
+                        (item1 + 1 == item2 &&
+                           item2 + 1 == item3 &&
+                           item3 + 1 == item4) ||
+                        // avoid same number repeating in the last two digit 1233
+                        item4 == item3 ||
+                        // avoid same number repeating in the first two digit 1145
+                        item1 == item2 ||
+                        // avoid if last 3 digits are even excluding 0
+                        (item2 % 2 == 0 &&
+                           item3 % 2 == 0 &&
+                           item4 % 2 == 0 &&
+                           item2 != 0 &&
+                           item3 != 0 &&
+                           item4 != 0) ||
+                        // avoid if last 3 digits are odd
+                        (item2 % 2 == 1 && item3 % 2 == 1 && item4 % 2 == 1) ||
+                        // avoid if first 3 digits are odd
+                        (item1 % 2 == 1 && item2 % 2 == 1 && item3 % 2 == 1) ||
+                        // avoid if all the numbers are unique
+                        // new Set([item1, item2, item3, item4]).size != 4
+                        // avoid if sum of middle numbers is >= 5
+                        item2 + item3 <= 5
                      )
                   ) {
                      hold.push([item1, item2, item3, item4]);
@@ -44,11 +77,16 @@ const allCombinations = (
    return hold;
 };
 
-const array1 = [2];
-const array2 = [0, 4, 5, 6, 7];
-const array3 = [0, 4, 5, 6];
-const array4 = [0, 4, 5, 6, 8];
+let array1 = [3];
+let array2 = [0, 1, 3, 4, 5, 6, 7];
+let array3 = [0, 1, 2, 5, 6, 8];
+let array4 = [0, 2, 3, 4, 5, 7, 6, 8];
 
+array2.splice(array2.indexOf(Number(LATEST_WIN.toString()[1])), 1);
+array3.splice(array3.indexOf(Number(LATEST_WIN.toString()[2])), 1);
+array4.splice(array4.indexOf(Number(LATEST_WIN.toString()[3])), 1);
+
+console.log(array1, array2, array3, array4);
 const result = allCombinations(array1, array2, array3, array4);
 console.log(result.length);
 console.log("number of cards to draw :" + result.length / 6);
