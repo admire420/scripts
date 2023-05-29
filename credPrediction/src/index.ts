@@ -77,10 +77,10 @@ const allCombinations = (
    return hold;
 };
 
-let array1 = [3];
+let array1 = [1];
 let array2 = [0, 1, 3, 4, 5, 6, 7];
 let array3 = [0, 1, 2, 5, 6, 8];
-let array4 = [0, 2, 3, 4, 5, 7, 6, 8];
+let array4 = [0, 2, 3, 4, 5, 6, 7, 8];
 
 array2.splice(array2.indexOf(Number(LATEST_WIN.toString()[1])), 1);
 array3.splice(array3.indexOf(Number(LATEST_WIN.toString()[2])), 1);
