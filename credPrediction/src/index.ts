@@ -62,8 +62,8 @@ const allCombinations = (
                         // avoid if first 3 digits are odd
                         (item1 % 2 == 1 && item2 % 2 == 1 && item3 % 2 == 1) ||
                         // avoid if all the numbers are unique
-                        // new Set([item1, item2, item3, item4]).size != 4
-                        // avoid if sum of middle numbers is >= 5
+                        new Set([item1, item2, item3, item4]).size != 4 ||
+                        // avoid if sum of middle numbers is <= 5
                         item2 + item3 <= 5
                      )
                   ) {
@@ -78,8 +78,8 @@ const allCombinations = (
 };
 
 let array1 = [1];
-let array2 = [0, 1, 3, 4, 5, 6, 7];
-let array3 = [0, 1, 2, 5, 6, 8];
+let array2 = [0, 1, 2, 3, 4, 5, 6, 7];
+let array3 = [0, 2, 5, 6, 8];
 let array4 = [0, 2, 3, 4, 5, 6, 7, 8];
 
 array2.splice(array2.indexOf(Number(LATEST_WIN.toString()[1])), 1);
