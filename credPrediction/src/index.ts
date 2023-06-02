@@ -31,10 +31,10 @@ const allCombinations = (
                         (item3 == 0 && item4 == 0) ||
                         (item2 == 0 && item3 == 0) ||
                         // avoid if all the numbers are even
-                        (item1 % 2 == 0 &&
-                           item2 % 2 == 0 &&
-                           item3 % 2 == 0 &&
-                           item4 % 2 == 0) ||
+                        // (item1 % 2 == 0 &&
+                        //    item2 % 2 == 0 &&
+                        //    item3 % 2 == 0 &&
+                        //    item4 % 2 == 0) ||
                         // avoid if all the numbers are odd
                         (item1 % 2 != 0 &&
                            item2 % 2 != 0 &&
@@ -66,7 +66,9 @@ const allCombinations = (
                         // avoid if all the numbers are unique
                         // new Set([item1, item2, item3, item4]).size != 4 ||
                         // avoid if sum of middle numbers is <= 5
-                        item2 + item3 <= 5
+                        item2 + item3 <= 5 ||
+                        //avoid if sum of end number is <=3
+                        item1 + item4 <= 2
                      )
                   ) {
                      hold.push([item1, item2, item3, item4]);
@@ -79,10 +81,10 @@ const allCombinations = (
    return hold;
 };
 
-let array1 = [3];
+let array1 = [2];
 let array2 = [0, 1, 2, 3, 4, 5, 6, 7];
 let array3 = [0, 2, 5, 6, 8];
-let array4 = [0, 3, 4, 5, 6, 8];
+let array4 = [0, 2, 3, 4, 5, 6, 8];
 
 array2.splice(array2.indexOf(Number(LATEST_WIN.toString()[1])), 1);
 array3.splice(array3.indexOf(Number(LATEST_WIN.toString()[2])), 1);
