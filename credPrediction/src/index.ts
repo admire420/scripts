@@ -19,6 +19,17 @@ const allCombinations = (
             if (!(item3 == item1 && item3 == item2)) {
                array4.forEach((item4) => {
                   // avoid 1333, 3133, 3313, 1133, 1331
+                  let first3even =
+                     item1 % 2 == 0 && item2 % 2 == 0 && item3 % 2 == 0;
+
+                  let first3odd =
+                     item1 % 2 == 1 && item2 % 2 == 1 && item3 % 2 == 1;
+
+                  let last3even =
+                     item2 % 2 == 0 && item3 % 2 == 0 && item4 % 2 == 0;
+
+                  let last3odd =
+                     item2 % 2 == 1 && item3 % 2 == 1 && item4 % 2 == 1;
 
                   if (
                      !(
@@ -31,10 +42,14 @@ const allCombinations = (
                         (item3 == 0 && item4 == 0) ||
                         (item2 == 0 && item3 == 0) ||
                         // avoid if all the numbers are even
-                        // (item1 % 2 == 0 &&
-                        //    item2 % 2 == 0 &&
-                        //    item3 % 2 == 0 &&
-                        //    item4 % 2 == 0) ||
+                        (item1 % 2 == 0 &&
+                           item2 % 2 == 0 &&
+                           item3 % 2 == 0 &&
+                           item4 % 2 == 0 &&
+                           item1 != 0 &&
+                           item2 != 0 &&
+                           item3 != 0 &&
+                           item4 != 0) ||
                         // avoid if all the numbers are odd
                         (item1 % 2 != 0 &&
                            item2 % 2 != 0 &&
@@ -43,13 +58,12 @@ const allCombinations = (
                         // avoid if any 3 or more digits are consecutively incresing in order 3451, 2123, 3456
                         (item1 + 1 == item2 && item2 + 1 == item3) ||
                         (item2 + 1 == item3 && item3 + 1 == item4) ||
-                        (item1 + 1 == item2 &&
-                           item2 + 1 == item3 &&
-                           item3 + 1 == item4) ||
                         // avoid same number repeating in the last two digit 1233
                         item4 == item3 ||
                         // avoid same number repeating in the first two digit 1145
                         item1 == item2 ||
+                        //avoid if same number is repeating in the middle
+                        item2 == item3 ||
                         // avoid if last 3 digits are even excluding 0
                         (item2 % 2 == 0 &&
                            item3 % 2 == 0 &&
@@ -60,15 +74,17 @@ const allCombinations = (
                         //avoid repeating 2 digit pattern 2323
                         (item1 == item3 && item2 == item4) ||
                         // avoid if last 3 digits are odd
-                        (item2 % 2 == 1 && item3 % 2 == 1 && item4 % 2 == 1) ||
+                        // last3odd ||
                         // avoid if first 3 digits are odd
-                        (item1 % 2 == 1 && item2 % 2 == 1 && item3 % 2 == 1) ||
+                        // first3odd ||
                         // avoid if all the numbers are unique
-                        // new Set([item1, item2, item3, item4]).size != 4 ||
-                        // avoid if sum of middle numbers is <= 5
-                        item2 + item3 <= 5 ||
-                        //avoid if sum of end number is <=3
-                        item1 + item4 <= 2
+                        new Set([item1, item2, item3, item4]).size == 4 ||
+                        // avoid if sum of middle numbers is <=
+                        item2 + item3 <= 6 ||
+                        //avoid if sum of end number is <=
+                        item1 + item4 <= 1 ||
+                        //avoid if the sum of last 3 numbers is <=
+                        item2 + item3 + item4 <= 8
                      )
                   ) {
                      hold.push([item1, item2, item3, item4]);
@@ -81,10 +97,14 @@ const allCombinations = (
    return hold;
 };
 
-let array1 = [2];
+let array1 = [4];
 let array2 = [0, 1, 2, 3, 4, 5, 6, 7];
 let array3 = [0, 2, 5, 6, 8];
 let array4 = [0, 2, 3, 4, 5, 6, 8];
+
+array2 = array2.concat([8]);
+array3 = array3.concat([1, 3, 4, 7]);
+array4 = array4.concat([7]);
 
 array2.splice(array2.indexOf(Number(LATEST_WIN.toString()[1])), 1);
 array3.splice(array3.indexOf(Number(LATEST_WIN.toString()[2])), 1);
@@ -105,6 +125,8 @@ fs.writeFileSync("results.json", JSON.stringify(result), (err: string) => {
       console.error(err);
    }
 });
+
+// console.log(numberDigitCount);
 
 // chatGPT:
 
