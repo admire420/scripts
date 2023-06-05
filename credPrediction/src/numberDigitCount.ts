@@ -56,23 +56,7 @@ const repeatingDigitCount = (numbers: number[]) => {
    return count;
 };
 
-const printRepeatingBids = (bids: number[]) => {
-   let len = bids.length;
-   let s = new Set();
-   let repeatingSet = [];
-
-   for (let i = 0; i < len; i++) {
-      if (s.has(bids[i])) {
-         repeatingSet.push(bids[i]);
-      } else {
-         s.add(bids[i]);
-      }
-   }
-   return repeatingSet;
-};
-let repeatingBids = printRepeatingBids(WINNING_BIDS);
-
 let repeatingDigits = repeatingDigitCount(WINNING_BIDS);
 
 export default digitCount(WINNING_BIDS);
-export { repeatingDigits, repeatingBids };
+export { repeatingDigits };

@@ -1,9 +1,18 @@
 const fs = require("fs");
-import numberDigitCount, {
-   repeatingDigits,
-   repeatingBids,
-} from "./numberDigitCount";
-import { LATEST_WIN } from "./constants";
+import numberDigitCount, { repeatingDigits } from "./numberDigitCount";
+import {
+   LATEST_WIN,
+   array1,
+   array2,
+   array3,
+   array4,
+   WINNING_BIDS,
+} from "./constants";
+import evenOdd, {
+   findRepeatingBids,
+   findUniqueBids,
+   findRepeatingPattern,
+} from "./calc";
 
 type count = {
    [key: number]: number;
@@ -105,39 +114,201 @@ let digit2 = Number(LATEST_WIN.toString()[1]);
 let digit3 = Number(LATEST_WIN.toString()[2]);
 let digit4 = Number(LATEST_WIN.toString()[3]);
 
-let array1 = [2];
-let array2 = [0, 1, 2, 3, 4, 5, 6, 7];
-let array3 = [0, 2, 5, 6, 8];
-let array4 = [0, 2, 3, 4, 5, 6, 8];
-
-array2 = array2.concat([8]);
-array3 = array3.concat([1, 3, 4, 7]);
-array4 = array4.concat([1, 7]);
-
 let array2hasdigit2 = array2.includes(digit2);
 let array3hasdigit3 = array3.includes(digit3);
 let array4hasdigit4 = array4.includes(digit4);
 
-console.log(array2hasdigit2, array3hasdigit3, array4hasdigit4);
+// console.log(array2hasdigit2, array3hasdigit3, array4hasdigit4);
 
 // remove repeating digits
 array2.splice(array2.indexOf(digit2), 1);
 array3.splice(array3.indexOf(digit3), 1);
 array4.splice(array4.indexOf(digit4), 1);
 
-console.log(array1, array2, array3, array4);
-
-console.log("Repeating Winning Bids :\n", repeatingBids.length);
-console.log("Repeating Bids :\n", repeatingBids);
 const result = allCombinations(array1, array2, array3, array4);
-console.log("Total Slots : " + result.length);
+const totalBids = WINNING_BIDS.length;
+const REPEATING_BIDS = findRepeatingBids(WINNING_BIDS);
+const totalRepeatingBids = REPEATING_BIDS.length;
+const UNIQUE_BIDS = findUniqueBids(WINNING_BIDS);
+const totalUniqueBids = UNIQUE_BIDS.length;
+
+//do calculations
+
+console.log("Total Winnings Bids :", totalBids);
+
 console.log(
-   "Number of cards to draw : " +
-      Math.floor(result.length / 6) +
-      " sets and " +
-      (result.length % 6) +
-      " slots"
+   "Repeating Winning Bids : " +
+      totalRepeatingBids +
+      " | Probability :" +
+      ((totalRepeatingBids / totalBids) * 100).toFixed(2) +
+      "%"
 );
+// console.log("Repeating Bids :\n", repeatingBids);
+
+console.log(
+   "Unique Winning Bids :" +
+      totalUniqueBids +
+      " | Probability :" +
+      ((totalUniqueBids / totalBids) * 100).toFixed(2) +
+      "%"
+);
+
+const evenOddResult = evenOdd(WINNING_BIDS);
+console.log(
+   "\nAll Even :" + evenOddResult.e1234.length,
+   "| Probability :" +
+      ((evenOddResult.e1234.length / totalBids) * 100).toFixed(2) +
+      "%"
+);
+console.log(
+   "All Even Except 0:",
+   evenOddResult.e1234exe0.length,
+   "| Probability :",
+   ((evenOddResult.e1234exe0.length / totalBids) * 100).toFixed(2) + "%"
+);
+console.log(
+   "All Odd :",
+   evenOddResult.o1234.length,
+   "| Probability :",
+   ((evenOddResult.o1234.length / totalBids) * 100).toFixed(2) + "%"
+);
+console.log(
+   "First 3 Even :",
+   evenOddResult.e123.length,
+   "| Probability :",
+   ((evenOddResult.e123.length / totalBids) * 100).toFixed(2) + "%"
+);
+console.log(
+   "First 3 Odd :",
+   evenOddResult.o123.length,
+   "| Probability :",
+   ((evenOddResult.o123.length / totalBids) * 100).toFixed(2) + "%"
+);
+console.log(
+   "Last 3 Even :",
+   evenOddResult.e234.length,
+   "| Probability :",
+   ((evenOddResult.e234.length / totalBids) * 100).toFixed(2) + "%"
+);
+console.log(
+   "Last 3 Odd :",
+   evenOddResult.o234.length,
+   "| Probability :",
+   ((evenOddResult.o234.length / totalBids) * 100).toFixed(2) + "%"
+);
+
+// when repeating
+const evenOddResultRepeating = evenOdd(REPEATING_BIDS);
+console.log(
+   "\nRepeating All Even :",
+   evenOddResultRepeating.e1234.length,
+   "| Probability :",
+   ((evenOddResultRepeating.e1234.length / totalRepeatingBids) * 100).toFixed(
+      2
+   ) + "%"
+);
+console.log(
+   "Repeating All Even Except 0:",
+   evenOddResultRepeating.e1234exe0.length,
+   "| Probability :",
+   (
+      (evenOddResultRepeating.e1234exe0.length / totalRepeatingBids) *
+      100
+   ).toFixed(2) + "%"
+);
+console.log(
+   "Repeating All Odd :",
+   evenOddResultRepeating.o1234.length,
+   "| Probability :",
+   ((evenOddResultRepeating.o1234.length / totalRepeatingBids) * 100).toFixed(
+      2
+   ) + "%"
+);
+console.log(
+   "Repeating First 3 Even :",
+   evenOddResultRepeating.e123.length,
+   "| Probability :",
+   ((evenOddResultRepeating.e123.length / totalRepeatingBids) * 100).toFixed(
+      2
+   ) + "%"
+);
+console.log(
+   "Repeating First 3 Odd :",
+   evenOddResultRepeating.o123.length,
+   "| Probability :",
+   ((evenOddResultRepeating.o123.length / totalRepeatingBids) * 100).toFixed(
+      2
+   ) + "%"
+);
+console.log(
+   "Repeating Last 3 Even :",
+   evenOddResultRepeating.e234.length,
+   "| Probability :",
+   ((evenOddResultRepeating.e234.length / totalRepeatingBids) * 100).toFixed(
+      2
+   ) + "%"
+);
+console.log(
+   "Repeating Last 3 Odd :",
+   evenOddResultRepeating.o234.length,
+   "| Probability :",
+   ((evenOddResultRepeating.o234.length / totalRepeatingBids) * 100).toFixed(
+      2
+   ) + "%"
+);
+
+// pattern number check
+const repeatingPattern = findRepeatingPattern(REPEATING_BIDS);
+const {
+   r12,
+   r23,
+   r34,
+   r13,
+   r14,
+   r24,
+   r123,
+   r234,
+   r134,
+   r124,
+   r12r34,
+   r14r23,
+   r13r24,
+} = repeatingPattern;
+let patterns = [
+   { name: "r12", data: r12 },
+   { name: "r23", data: r23 },
+   { name: "r34", data: r34 },
+   { name: "r13", data: r13 },
+   { name: "r14", data: r14 },
+   { name: "r24", data: r24 },
+   { name: "r123", data: r123 },
+   { name: "r234", data: r234 },
+   { name: "r134", data: r134 },
+   { name: "r124", data: r124 },
+   { name: "r12r34", data: r12r34 },
+   { name: "r14r23", data: r14r23 },
+   { name: "r13r24", data: r13r24 },
+];
+console.log("");
+patterns.forEach((pattern) => {
+   console.log(
+      `Repeating Pattern ${pattern.name} :` + pattern.data.length,
+      "| Probability :" +
+         ((pattern.data.length / totalRepeatingBids) * 100).toFixed(2) +
+         "%"
+   );
+});
+
+// console.log("Total Slots :" + result.length);
+// console.log(
+//    "Number of cards to draw :" +
+//       Math.floor(result.length / 6) +
+//       " sets and " +
+//       (result.length % 6) +
+//       " slots"
+// );
+// console.log(array1, array2, array3, array4);
+
 fs.writeFileSync("results.json", JSON.stringify(result), (err: string) => {
    if (err) {
       console.error(err);
