@@ -12,6 +12,7 @@ import evenOdd, {
    findRepeatingBids,
    findUniqueBids,
    findRepeatingPattern,
+   findAllStartsWith,
 } from "./calc";
 
 type count = {
@@ -153,111 +154,91 @@ console.log(
       "%"
 );
 
-const evenOddResult = evenOdd(WINNING_BIDS);
-console.log(
-   "\nAll Even :" + evenOddResult.e1234.length,
-   "| Probability :" +
-      ((evenOddResult.e1234.length / totalBids) * 100).toFixed(2) +
-      "%"
-);
-console.log(
-   "All Even Except 0:",
-   evenOddResult.e1234exe0.length,
-   "| Probability :",
-   ((evenOddResult.e1234exe0.length / totalBids) * 100).toFixed(2) + "%"
-);
-console.log(
-   "All Odd :",
-   evenOddResult.o1234.length,
-   "| Probability :",
-   ((evenOddResult.o1234.length / totalBids) * 100).toFixed(2) + "%"
-);
-console.log(
-   "First 3 Even :",
-   evenOddResult.e123.length,
-   "| Probability :",
-   ((evenOddResult.e123.length / totalBids) * 100).toFixed(2) + "%"
-);
-console.log(
-   "First 3 Odd :",
-   evenOddResult.o123.length,
-   "| Probability :",
-   ((evenOddResult.o123.length / totalBids) * 100).toFixed(2) + "%"
-);
-console.log(
-   "Last 3 Even :",
-   evenOddResult.e234.length,
-   "| Probability :",
-   ((evenOddResult.e234.length / totalBids) * 100).toFixed(2) + "%"
-);
-console.log(
-   "Last 3 Odd :",
-   evenOddResult.o234.length,
-   "| Probability :",
-   ((evenOddResult.o234.length / totalBids) * 100).toFixed(2) + "%"
-);
+// Odd/Even Pattern Matching
+{
+   const { e1234, e1234exe0, o1234, e123, o123, e234, o234 } =
+      evenOdd(WINNING_BIDS);
+   let evenOddPatterns = [
+      { name: "e1234", data: e1234 },
+      { name: "e1234exe0", data: e1234exe0 },
+      { name: "o1234", data: o1234 },
+      { name: "e123", data: e123 },
+      { name: "o123", data: o123 },
+      { name: "e234", data: e234 },
+      { name: "o234", data: o234 },
+   ];
+   console.log("");
+   evenOddPatterns.forEach((pattern) => {
+      console.log(
+         `Odd/Even ${pattern.name} :` + pattern.data.length,
+         "| Probability :" +
+            ((pattern.data.length / totalRepeatingBids) * 100).toFixed(2) +
+            "%"
+      );
+   });
+}
 
-// when repeating
-const evenOddResultRepeating = evenOdd(REPEATING_BIDS);
-console.log(
-   "\nRepeating All Even :",
-   evenOddResultRepeating.e1234.length,
-   "| Probability :",
-   ((evenOddResultRepeating.e1234.length / totalRepeatingBids) * 100).toFixed(
-      2
-   ) + "%"
-);
-console.log(
-   "Repeating All Even Except 0:",
-   evenOddResultRepeating.e1234exe0.length,
-   "| Probability :",
-   (
-      (evenOddResultRepeating.e1234exe0.length / totalRepeatingBids) *
-      100
-   ).toFixed(2) + "%"
-);
-console.log(
-   "Repeating All Odd :",
-   evenOddResultRepeating.o1234.length,
-   "| Probability :",
-   ((evenOddResultRepeating.o1234.length / totalRepeatingBids) * 100).toFixed(
-      2
-   ) + "%"
-);
-console.log(
-   "Repeating First 3 Even :",
-   evenOddResultRepeating.e123.length,
-   "| Probability :",
-   ((evenOddResultRepeating.e123.length / totalRepeatingBids) * 100).toFixed(
-      2
-   ) + "%"
-);
-console.log(
-   "Repeating First 3 Odd :",
-   evenOddResultRepeating.o123.length,
-   "| Probability :",
-   ((evenOddResultRepeating.o123.length / totalRepeatingBids) * 100).toFixed(
-      2
-   ) + "%"
-);
-console.log(
-   "Repeating Last 3 Even :",
-   evenOddResultRepeating.e234.length,
-   "| Probability :",
-   ((evenOddResultRepeating.e234.length / totalRepeatingBids) * 100).toFixed(
-      2
-   ) + "%"
-);
-console.log(
-   "Repeating Last 3 Odd :",
-   evenOddResultRepeating.o234.length,
-   "| Probability :",
-   ((evenOddResultRepeating.o234.length / totalRepeatingBids) * 100).toFixed(
-      2
-   ) + "%"
-);
+// Starts with - swd1
+{
+   const swd1Array = [0, 1, 2, 3, 4, 5, 6];
+   const swd1 = findAllStartsWith(swd1Array, 1, WINNING_BIDS);
+   console.log("");
+   swd1Array.forEach((key) => {
+      console.log(
+         "Starts With - swd1 " + `${key}:`,
+         swd1[key].length,
+         "| Probability :" +
+            ((swd1[key].length / totalBids) * 100).toFixed(2) +
+            "%"
+      );
+   });
+}
 
-// pattern number check
+// --- WHILE REPEATING ---
+
+// Starts with - swd1
+const swd1Array = [0, 1, 2, 3, 4, 5, 6];
+const swd1 = findAllStartsWith(swd1Array, 1, REPEATING_BIDS);
+console.log("");
+swd1Array.forEach((key) => {
+   console.log(
+      "Repeating - Starts With - swd1 " + `${key}:`,
+      swd1[key].length,
+      "| Repeating Probability :" +
+         ((swd1[key].length / totalRepeatingBids) * 100).toFixed(2) +
+         "%",
+      "| Total Probability :" +
+         ((swd1[key].length / totalBids) * 100).toFixed(2) +
+         "%"
+   );
+});
+
+// Odd/Even Pattern Matching
+const { e1234, e1234exe0, o1234, e123, o123, e234, o234 } =
+   evenOdd(REPEATING_BIDS);
+let evenOddPatterns = [
+   { name: "e1234", data: e1234 },
+   { name: "e1234exe0", data: e1234exe0 },
+   { name: "o1234", data: o1234 },
+   { name: "e123", data: e123 },
+   { name: "o123", data: o123 },
+   { name: "e234", data: e234 },
+   { name: "o234", data: o234 },
+];
+console.log("");
+evenOddPatterns.forEach((pattern) => {
+   console.log(
+      `Repeating - Odd/Even ${pattern.name} :` + pattern.data.length,
+      "| Repeating Probability :" +
+         ((pattern.data.length / totalRepeatingBids) * 100).toFixed(2) +
+         "%",
+      "| Total Probability :" +
+         ((pattern.data.length / totalBids) * 100).toFixed(2) +
+         "%"
+   );
+});
+
+// Repeating Pattern Matching
 const repeatingPattern = findRepeatingPattern(REPEATING_BIDS);
 const {
    r12,
@@ -274,7 +255,7 @@ const {
    r14r23,
    r13r24,
 } = repeatingPattern;
-let patterns = [
+let repeatingPatterns = [
    { name: "r12", data: r12 },
    { name: "r23", data: r23 },
    { name: "r34", data: r34 },
@@ -290,11 +271,14 @@ let patterns = [
    { name: "r13r24", data: r13r24 },
 ];
 console.log("");
-patterns.forEach((pattern) => {
+repeatingPatterns.forEach((pattern) => {
    console.log(
-      `Repeating Pattern ${pattern.name} :` + pattern.data.length,
-      "| Probability :" +
+      `Repeating Pattern - ${pattern.name} :` + pattern.data.length,
+      "| Probability Repeating :" +
          ((pattern.data.length / totalRepeatingBids) * 100).toFixed(2) +
+         "%",
+      "| Total Probability :" +
+         ((pattern.data.length / totalBids) * 100).toFixed(2) +
          "%"
    );
 });

@@ -63,6 +63,34 @@ const evenOdd = (bids: number[]) => {
    };
 };
 
+const findStartsWith = (start: number, digit: number, bids: number[]) => {
+   //here digit counts from 1-len(num)
+   const startsWith: number[] = [];
+   bids.forEach((bid) => {
+      const num = Number(bid.toString()[digit - 1]);
+      if (start === num) {
+         startsWith.push(bid);
+      }
+   });
+
+   return startsWith;
+};
+
+const findAllStartsWith = (
+   startArray: number[],
+   digit: number,
+   bids: number[]
+) => {
+   const result: { [key: number]: number[] } = {};
+   startArray.forEach((start) => {
+      if (!result[start]) {
+         result[start] = [];
+      }
+      result[start] = findStartsWith(start, digit, bids);
+   });
+   return result;
+};
+
 const findRepeatingBids = (bids: number[]) => {
    const repeatingBids: number[] = [];
    bids.forEach((bid) => {
@@ -164,4 +192,10 @@ const findRepeatingPattern = (bids: number[]) => {
 };
 
 export default evenOdd;
-export { findRepeatingBids, findUniqueBids, findRepeatingPattern };
+export {
+   findRepeatingBids,
+   findUniqueBids,
+   findRepeatingPattern,
+   findStartsWith,
+   findAllStartsWith,
+};
