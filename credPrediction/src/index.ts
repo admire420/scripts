@@ -13,6 +13,7 @@ import evenOdd, {
    findUniqueBids,
    findRepeatingPattern,
    findAllStartsWith,
+   findAvg,
 } from "./calc";
 
 type count = {
@@ -194,7 +195,50 @@ console.log(
    });
 }
 
+// Find Average Patterns
+{
+   const { a12, a13, a14, a24, a23, a34, a123, a234, a124, a134, a1234 } =
+      findAvg(WINNING_BIDS);
+   let avgPatterns = [
+      { name: "a12", data: a12 },
+      { name: "a13", data: a13 },
+      { name: "a14", data: a14 },
+      { name: "a24", data: a24 },
+      { name: "a23", data: a23 },
+      { name: "a34", data: a34 },
+      { name: "a123", data: a123 },
+      { name: "a234", data: a234 },
+      { name: "a124", data: a124 },
+      { name: "a134", data: a134 },
+      { name: "a1234", data: a1234 },
+   ];
+   console.log("");
+   avgPatterns.forEach((pattern) => {
+      console.log(`Avg ${pattern.name} :` + pattern.data);
+   });
+}
+
 // --- WHILE REPEATING ---
+// Find Average patterns
+const { a12, a13, a14, a24, a23, a34, a123, a234, a124, a134, a1234 } =
+   findAvg(REPEATING_BIDS);
+let avgPatterns = [
+   { name: "a12", data: a12 },
+   { name: "a13", data: a13 },
+   { name: "a14", data: a14 },
+   { name: "a24", data: a24 },
+   { name: "a23", data: a23 },
+   { name: "a34", data: a34 },
+   { name: "a123", data: a123 },
+   { name: "a234", data: a234 },
+   { name: "a124", data: a124 },
+   { name: "a134", data: a134 },
+   { name: "a1234", data: a1234 },
+];
+console.log("");
+avgPatterns.forEach((pattern) => {
+   console.log(`Repeating - Avg ${pattern.name} :` + pattern.data);
+});
 
 // Starts with - swd1
 const swd1Array = [0, 1, 2, 3, 4, 5, 6];

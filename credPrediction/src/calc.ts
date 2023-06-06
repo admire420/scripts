@@ -191,6 +191,56 @@ const findRepeatingPattern = (bids: number[]) => {
    };
 };
 
+const findAvg = (bids: number[]) => {
+   let a12 = 0;
+   let a13 = 0;
+   let a14 = 0;
+   let a24 = 0;
+   let a23 = 0;
+   let a34 = 0;
+   let a123 = 0;
+   let a234 = 0;
+   let a124 = 0;
+   let a134 = 0;
+   let a1234 = 0;
+   const totalBids = bids.length;
+
+   bids.forEach((bid) => {
+      let d1 = Number(bid.toString()[0]);
+      let d2 = Number(bid.toString()[1]);
+      let d3 = Number(bid.toString()[2]);
+      let d4 = Number(bid.toString()[3]);
+
+      a12 = a12 + (d1 + d2) / totalBids;
+      a13 = a13 + (d1 + d3) / totalBids;
+      a14 = a14 + (d1 + d4) / totalBids;
+      a24 = a24 + (d2 + d4) / totalBids;
+      a23 = a23 + (d2 + d3) / totalBids;
+      a34 = a34 + (d3 + d4) / totalBids;
+
+      a123 = a123 + (d1 + d2 + d3) / totalBids;
+      a234 = a234 + (d2 + d3 + d4) / totalBids;
+      a124 = a124 + (d1 + d2 + d4) / totalBids;
+      a134 = a134 + (d1 + d3 + d4) / totalBids;
+
+      a1234 = a1234 + (d1 + d2 + d3 + d4) / totalBids;
+   });
+
+   return {
+      a12: Number(a12.toFixed(2)),
+      a13: Number(a13.toFixed(2)),
+      a14: Number(a14.toFixed(2)),
+      a24: Number(a24.toFixed(2)),
+      a23: Number(a23.toFixed(2)),
+      a34: Number(a34.toFixed(2)),
+      a123: Number(a123.toFixed(2)),
+      a234: Number(a234.toFixed(2)),
+      a124: Number(a124.toFixed(2)),
+      a134: Number(a134.toFixed(2)),
+      a1234: Number(a1234.toFixed(2)),
+   };
+};
+
 export default evenOdd;
 export {
    findRepeatingBids,
@@ -198,4 +248,5 @@ export {
    findRepeatingPattern,
    findStartsWith,
    findAllStartsWith,
+   findAvg,
 };
