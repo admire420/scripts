@@ -6,6 +6,8 @@ const evenOdd = (bids: number[]) => {
    let o123: number[] = [];
    let e234: number[] = [];
    let o234: number[] = [];
+   let e234exe0: number[] = [];
+   let e123exe0: number[] = [];
 
    bids.forEach((bid) => {
       let d1 = Number(bid.toString()[0]);
@@ -50,6 +52,12 @@ const evenOdd = (bids: number[]) => {
       if (!d2even && !d3even && !d4even) {
          o234.push(bid);
       }
+      if (d2even && d3even && d4even && d2 != 0 && d3 != 0 && d4 != 0) {
+         e234exe0.push(bid);
+      }
+      if (d1even && d2even && d3even && d1 != 0 && d2 != 0 && d3 != 0) {
+         e123exe0.push(bid);
+      }
    });
 
    return {
@@ -60,6 +68,8 @@ const evenOdd = (bids: number[]) => {
       o123,
       e234,
       o234,
+      e123exe0,
+      e234exe0,
    };
 };
 
