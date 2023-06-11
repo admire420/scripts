@@ -150,6 +150,9 @@ const findRepeatingPattern = (bids: number[]) => {
    const r13r24: number[] = []; // 1212
    const r14r23: number[] = []; // 1221
 
+   const rd1: number[] = []; // 3253
+   const rd2: number[] = []; // 3262
+
    bids.forEach((bid) => {
       let d1 = Number(bid.toString()[0]);
       let d2 = Number(bid.toString()[1]);
@@ -213,6 +216,31 @@ const findAvg = (bids: number[]) => {
    let a124 = 0;
    let a134 = 0;
    let a1234 = 0;
+
+   let r1a12 = 0;
+   let r1a13 = 0;
+   let r1a14 = 0;
+   let r1a24 = 0;
+   let r1a23 = 0;
+   let r1a34 = 0;
+   let r1a123 = 0;
+   let r1a234 = 0;
+   let r1a124 = 0;
+   let r1a134 = 0;
+   let r1a1234 = 0;
+
+   let r2a12 = 0;
+   let r2a13 = 0;
+   let r2a14 = 0;
+   let r2a24 = 0;
+   let r2a23 = 0;
+   let r2a34 = 0;
+   let r2a123 = 0;
+   let r2a234 = 0;
+   let r2a124 = 0;
+   let r2a134 = 0;
+   let r2a1234 = 0;
+
    const totalBids = bids.length;
 
    bids.forEach((bid) => {
@@ -220,6 +248,41 @@ const findAvg = (bids: number[]) => {
       let d2 = Number(bid.toString()[1]);
       let d3 = Number(bid.toString()[2]);
       let d4 = Number(bid.toString()[3]);
+
+      const r1 = d1 == d2 || d1 == d3 || d1 == d4;
+      const r2 = d2 == d3 || d2 == d4;
+
+      if (r1) {
+         r1a12 = r1a12 + (d1 + d2) / totalBids;
+         r1a13 = r1a13 + (d1 + d3) / totalBids;
+         r1a14 = r1a14 + (d1 + d4) / totalBids;
+         r1a24 = r1a24 + (d2 + d4) / totalBids;
+         r1a23 = r1a23 + (d2 + d3) / totalBids;
+         r1a34 = r1a34 + (d3 + d4) / totalBids;
+
+         r1a123 = r1a123 + (d1 + d2 + d3) / totalBids;
+         r1a234 = r1a234 + (d2 + d3 + d4) / totalBids;
+         r1a124 = r1a124 + (d1 + d2 + d4) / totalBids;
+         r1a134 = r1a134 + (d1 + d3 + d4) / totalBids;
+
+         r1a1234 = r1a1234 + (d1 + d2 + d3 + d4) / totalBids;
+      }
+
+      if (r2) {
+         r2a12 = r2a12 + (d1 + d2) / totalBids;
+         r2a13 = r2a13 + (d1 + d3) / totalBids;
+         r2a14 = r2a14 + (d1 + d4) / totalBids;
+         r2a24 = r2a24 + (d2 + d4) / totalBids;
+         r2a23 = r2a23 + (d2 + d3) / totalBids;
+         r2a34 = r2a34 + (d3 + d4) / totalBids;
+
+         r2a123 = r2a123 + (d1 + d2 + d3) / totalBids;
+         r2a234 = r2a234 + (d2 + d3 + d4) / totalBids;
+         r2a124 = r2a124 + (d1 + d2 + d4) / totalBids;
+         r2a134 = r2a134 + (d1 + d3 + d4) / totalBids;
+
+         r2a1234 = r2a1234 + (d1 + d2 + d3 + d4) / totalBids;
+      }
 
       a12 = a12 + (d1 + d2) / totalBids;
       a13 = a13 + (d1 + d3) / totalBids;
@@ -248,6 +311,294 @@ const findAvg = (bids: number[]) => {
       a124: Number(a124.toFixed(2)),
       a134: Number(a134.toFixed(2)),
       a1234: Number(a1234.toFixed(2)),
+
+      r1a12: Number(r1a12.toFixed(2)),
+      r1a13: Number(r1a13.toFixed(2)),
+      r1a14: Number(r1a14.toFixed(2)),
+      r1a24: Number(r1a24.toFixed(2)),
+      r1a23: Number(r1a23.toFixed(2)),
+      r1a34: Number(r1a34.toFixed(2)),
+      r1a123: Number(r1a123.toFixed(2)),
+      r1a234: Number(r1a234.toFixed(2)),
+      r1a124: Number(r1a124.toFixed(2)),
+      r1a134: Number(r1a134.toFixed(2)),
+      r1a1234: Number(r1a1234.toFixed(2)),
+
+      r2a12: Number(r2a12.toFixed(2)),
+      r2a13: Number(r2a13.toFixed(2)),
+      r2a14: Number(r2a14.toFixed(2)),
+      r2a24: Number(r2a24.toFixed(2)),
+      r2a23: Number(r2a23.toFixed(2)),
+      r2a34: Number(r2a34.toFixed(2)),
+      r2a123: Number(r2a123.toFixed(2)),
+      r2a234: Number(r2a234.toFixed(2)),
+      r2a124: Number(r2a124.toFixed(2)),
+      r2a134: Number(r2a134.toFixed(2)),
+      r2a1234: Number(r2a1234.toFixed(2)),
+   };
+};
+
+const findMax = (bids: number[]) => {
+   let max12 = 0;
+   let max13 = 0;
+   let max14 = 0;
+   let max24 = 0;
+   let max23 = 0;
+   let max34 = 0;
+   let max123 = 0;
+   let max234 = 0;
+   let max124 = 0;
+   let max134 = 0;
+   let max1234 = 0;
+
+   let r1max12 = 0;
+   let r1max13 = 0;
+   let r1max14 = 0;
+   let r1max24 = 0;
+   let r1max23 = 0;
+   let r1max34 = 0;
+   let r1max123 = 0;
+   let r1max234 = 0;
+   let r1max124 = 0;
+   let r1max134 = 0;
+   let r1max1234 = 0;
+
+   let r2max12 = 0;
+   let r2max13 = 0;
+   let r2max14 = 0;
+   let r2max24 = 0;
+   let r2max23 = 0;
+   let r2max34 = 0;
+   let r2max123 = 0;
+   let r2max234 = 0;
+   let r2max124 = 0;
+   let r2max134 = 0;
+   let r2max1234 = 0;
+
+   bids.forEach((bid) => {
+      let d1 = Number(bid.toString()[0]);
+      let d2 = Number(bid.toString()[1]);
+      let d3 = Number(bid.toString()[2]);
+      let d4 = Number(bid.toString()[3]);
+
+      const r1 = d1 == d2 || d1 == d3 || d1 == d4;
+      const r2 = d2 == d3 || d2 == d4;
+
+      if (r1) {
+         r1max12 = Math.max(r1max12, d1 + d2);
+         r1max13 = Math.max(r1max13, d1 + d3);
+         r1max14 = Math.max(r1max14, d1 + d4);
+         r1max24 = Math.max(r1max24, d2 + d4);
+         r1max23 = Math.max(r1max23, d2 + d3);
+         r1max34 = Math.max(r1max34, d3 + d4);
+
+         r1max123 = Math.max(r1max123, d1 + d2 + d3);
+         r1max234 = Math.max(r1max234, d2 + d3 + d4);
+         r1max124 = Math.max(r1max124, d1 + d2 + d4);
+         r1max134 = Math.max(r1max134, d1 + d3 + d4);
+
+         r1max1234 = Math.max(r1max1234, d1 + d2 + d3 + d4);
+      }
+
+      if (r2) {
+         r2max12 = Math.max(r2max12, d1 + d2);
+         r2max13 = Math.max(r2max13, d1 + d3);
+         r2max14 = Math.max(r2max14, d1 + d4);
+         r2max24 = Math.max(r2max24, d2 + d4);
+         r2max23 = Math.max(r2max23, d2 + d3);
+         r2max34 = Math.max(r2max34, d3 + d4);
+
+         r2max123 = Math.max(r2max123, d1 + d2 + d3);
+         r2max234 = Math.max(r2max234, d2 + d3 + d4);
+         r2max124 = Math.max(r2max124, d1 + d2 + d4);
+         r2max134 = Math.max(r2max134, d1 + d3 + d4);
+
+         r2max1234 = Math.max(r2max1234, d1 + d2 + d3 + d4);
+      }
+
+      max12 = Math.max(max12, d1 + d2);
+      max13 = Math.max(max13, d1 + d3);
+      max14 = Math.max(max14, d1 + d4);
+      max24 = Math.max(max24, d2 + d4);
+      max23 = Math.max(max23, d2 + d3);
+      max34 = Math.max(max34, d3 + d4);
+
+      max123 = Math.max(max123, d1 + d2 + d3);
+      max234 = Math.max(max234, d2 + d3 + d4);
+      max124 = Math.max(max124, d1 + d2 + d4);
+      max134 = Math.max(max134, d1 + d3 + d4);
+
+      max1234 = Math.max(max1234, d1 + d2 + d3 + d4);
+   });
+
+   return {
+      max12: Number(max12.toFixed(2)),
+      max13: Number(max13.toFixed(2)),
+      max14: Number(max14.toFixed(2)),
+      max24: Number(max24.toFixed(2)),
+      max23: Number(max23.toFixed(2)),
+      max34: Number(max34.toFixed(2)),
+      max123: Number(max123.toFixed(2)),
+      max234: Number(max234.toFixed(2)),
+      max124: Number(max124.toFixed(2)),
+      max134: Number(max134.toFixed(2)),
+      max1234: Number(max1234.toFixed(2)),
+
+      r1max12: Number(r1max12.toFixed(2)),
+      r1max13: Number(r1max13.toFixed(2)),
+      r1max14: Number(r1max14.toFixed(2)),
+      r1max24: Number(r1max24.toFixed(2)),
+      r1max23: Number(r1max23.toFixed(2)),
+      r1max34: Number(r1max34.toFixed(2)),
+      r1max123: Number(r1max123.toFixed(2)),
+      r1max234: Number(r1max234.toFixed(2)),
+      r1max124: Number(r1max124.toFixed(2)),
+      r1max134: Number(r1max134.toFixed(2)),
+      r1max1234: Number(r1max1234.toFixed(2)),
+
+      r2max12: Number(r2max12.toFixed(2)),
+      r2max13: Number(r2max13.toFixed(2)),
+      r2max14: Number(r2max14.toFixed(2)),
+      r2max24: Number(r2max24.toFixed(2)),
+      r2max23: Number(r2max23.toFixed(2)),
+      r2max34: Number(r2max34.toFixed(2)),
+      r2max123: Number(r2max123.toFixed(2)),
+      r2max234: Number(r2max234.toFixed(2)),
+      r2max124: Number(r2max124.toFixed(2)),
+      r2max134: Number(r2max134.toFixed(2)),
+      r2max1234: Number(r2max1234.toFixed(2)),
+   };
+};
+
+const findMin = (bids: number[]) => {
+   let min12 = Infinity;
+   let min13 = Infinity;
+   let min14 = Infinity;
+   let min24 = Infinity;
+   let min23 = Infinity;
+   let min34 = Infinity;
+   let min123 = Infinity;
+   let min234 = Infinity;
+   let min124 = Infinity;
+   let min134 = Infinity;
+   let min1234 = Infinity;
+
+   let r1min12 = Infinity;
+   let r1min13 = Infinity;
+   let r1min14 = Infinity;
+   let r1min24 = Infinity;
+   let r1min23 = Infinity;
+   let r1min34 = Infinity;
+   let r1min123 = Infinity;
+   let r1min234 = Infinity;
+   let r1min124 = Infinity;
+   let r1min134 = Infinity;
+   let r1min1234 = Infinity;
+
+   let r2min12 = Infinity;
+   let r2min13 = Infinity;
+   let r2min14 = Infinity;
+   let r2min24 = Infinity;
+   let r2min23 = Infinity;
+   let r2min34 = Infinity;
+   let r2min123 = Infinity;
+   let r2min234 = Infinity;
+   let r2min124 = Infinity;
+   let r2min134 = Infinity;
+   let r2min1234 = Infinity;
+
+   bids.forEach((bid) => {
+      let d1 = Number(bid.toString()[0]);
+      let d2 = Number(bid.toString()[1]);
+      let d3 = Number(bid.toString()[2]);
+      let d4 = Number(bid.toString()[3]);
+
+      const r1 = d1 == d2 || d1 == d3 || d1 == d4;
+      const r2 = d2 == d3 || d2 == d4;
+
+      if (r1) {
+         r1min12 = Math.min(r1min12, d1 + d2);
+         r1min13 = Math.min(r1min13, d1 + d3);
+         r1min14 = Math.min(r1min14, d1 + d4);
+         r1min24 = Math.min(r1min24, d2 + d4);
+         r1min23 = Math.min(r1min23, d2 + d3);
+         r1min34 = Math.min(r1min34, d3 + d4);
+
+         r1min123 = Math.min(r1min123, d1 + d2 + d3);
+         r1min234 = Math.min(r1min234, d2 + d3 + d4);
+         r1min124 = Math.min(r1min124, d1 + d2 + d4);
+         r1min134 = Math.min(r1min134, d1 + d3 + d4);
+
+         r1min1234 = Math.min(r1min1234, d1 + d2 + d3 + d4);
+      }
+
+      if (r2) {
+         r2min12 = Math.min(r2min12, d1 + d2);
+         r2min13 = Math.min(r2min13, d1 + d3);
+         r2min14 = Math.min(r2min14, d1 + d4);
+         r2min24 = Math.min(r2min24, d2 + d4);
+         r2min23 = Math.min(r2min23, d2 + d3);
+         r2min34 = Math.min(r2min34, d3 + d4);
+
+         r2min123 = Math.min(r2min123, d1 + d2 + d3);
+         r2min234 = Math.min(r2min234, d2 + d3 + d4);
+         r2min124 = Math.min(r2min124, d1 + d2 + d4);
+         r2min134 = Math.min(r2min134, d1 + d3 + d4);
+
+         r2min1234 = Math.min(r2min1234, d1 + d2 + d3 + d4);
+      }
+
+      min12 = Math.min(min12, d1 + d2);
+      min13 = Math.min(min13, d1 + d3);
+      min14 = Math.min(min14, d1 + d4);
+      min24 = Math.min(min24, d2 + d4);
+      min23 = Math.min(min23, d2 + d3);
+      min34 = Math.min(min34, d3 + d4);
+
+      min123 = Math.min(min123, d1 + d2 + d3);
+      min234 = Math.min(min234, d2 + d3 + d4);
+      min124 = Math.min(min124, d1 + d2 + d4);
+      min134 = Math.min(min134, d1 + d3 + d4);
+
+      min1234 = Math.min(min1234, d1 + d2 + d3 + d4);
+   });
+
+   return {
+      min12: Number(min12.toFixed(2)),
+      min13: Number(min13.toFixed(2)),
+      min14: Number(min14.toFixed(2)),
+      min24: Number(min24.toFixed(2)),
+      min23: Number(min23.toFixed(2)),
+      min34: Number(min34.toFixed(2)),
+      min123: Number(min123.toFixed(2)),
+      min234: Number(min234.toFixed(2)),
+      min124: Number(min124.toFixed(2)),
+      min134: Number(min134.toFixed(2)),
+      min1234: Number(min1234.toFixed(2)),
+
+      r1min12: Number(r1min12.toFixed(2)),
+      r1min13: Number(r1min13.toFixed(2)),
+      r1min14: Number(r1min14.toFixed(2)),
+      r1min24: Number(r1min24.toFixed(2)),
+      r1min23: Number(r1min23.toFixed(2)),
+      r1min34: Number(r1min34.toFixed(2)),
+      r1min123: Number(r1min123.toFixed(2)),
+      r1min234: Number(r1min234.toFixed(2)),
+      r1min124: Number(r1min124.toFixed(2)),
+      r1min134: Number(r1min134.toFixed(2)),
+      r1min1234: Number(r1min1234.toFixed(2)),
+
+      r2min12: Number(r2min12.toFixed(2)),
+      r2min13: Number(r2min13.toFixed(2)),
+      r2min14: Number(r2min14.toFixed(2)),
+      r2min24: Number(r2min24.toFixed(2)),
+      r2min23: Number(r2min23.toFixed(2)),
+      r2min34: Number(r2min34.toFixed(2)),
+      r2min123: Number(r2min123.toFixed(2)),
+      r2min234: Number(r2min234.toFixed(2)),
+      r2min124: Number(r2min124.toFixed(2)),
+      r2min134: Number(r2min134.toFixed(2)),
+      r2min1234: Number(r2min1234.toFixed(2)),
    };
 };
 
@@ -259,4 +610,6 @@ export {
    findStartsWith,
    findAllStartsWith,
    findAvg,
+   findMax,
+   findMin,
 };
