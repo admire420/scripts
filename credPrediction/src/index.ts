@@ -1,3 +1,3 @@
 import numberDigitCount, { repeatingDigits } from "./numberDigitCount";
-import "./prediction";
+require("./prediction");
 // import "./stats";

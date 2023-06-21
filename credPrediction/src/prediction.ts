@@ -1,7 +1,14 @@
 const fs = require("fs");
 import { WINNING_BIDS } from "./constants";
 import { findRepeatingBids } from "./calc";
-import { LATEST_WIN, array1, array2, array3, array4 } from "./constants";
+import {
+   LATEST_WIN,
+   TOTAL_PREDICTIONS,
+   array1,
+   array2,
+   array3,
+   array4,
+} from "./constants";
 type count = {
    [key: number]: number;
 };
@@ -87,33 +94,7 @@ const predictionCondition2 = (
       sum1234 >= 7
    ) {
       d1Repeating = true;
-   } else if (
-      repeating &&
-      r2 &&
-      sum12 <= 9 &&
-      sum13 <= 11 &&
-      sum14 <= 10 &&
-      sum24 <= 16 &&
-      sum23 <= 14 &&
-      sum34 <= 14 &&
-      sum123 <= 15 &&
-      sum234 <= 20 &&
-      sum124 <= 17 &&
-      sum134 <= 16 &&
-      sum1234 <= 22 &&
-      sum12 >= 5 &&
-      sum13 >= 3 &&
-      sum14 >= 2 &&
-      sum24 >= 2 &&
-      sum23 >= 8 &&
-      sum34 >= 4 &&
-      sum123 >= 10 &&
-      sum234 >= 8 &&
-      sum124 >= 6 &&
-      sum134 >= 6 &&
-      sum1234 >= 10 &&
-      ((d1 <= 3 && d2 > 3) || (d1 > 3 && d2 < 3))
-   ) {
+   } else if ((d1 <= 3 && d2 > 3) || (d1 > 3 && d2 < 3)) {
       d2Repeating = true;
    }
 
@@ -128,6 +109,7 @@ const predictionCondition2 = (
       r14r23 ||
       r12r34 ||
       r13r24 ||
+      //Trade Offs
       r12 ||
       r34 ||
       r23 ||
@@ -291,7 +273,14 @@ console.log(
       testPredictions(REPEATING_BIDS) +
       "%"
 );
-console.log("Total Slots :" + result.length);
+console.log("Total Slots Possible :" + TOTAL_PREDICTIONS);
+console.log(
+   "Total Slots Required :" +
+      result.length +
+      " which is " +
+      ((result.length / TOTAL_PREDICTIONS) * 100).toFixed(2) +
+      "% of the total"
+);
 console.log(
    "Number of cards to draw :" +
       Math.floor(result.length / 6) +
