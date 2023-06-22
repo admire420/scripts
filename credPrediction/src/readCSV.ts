@@ -1,6 +1,5 @@
 const fs = require("fs");
 import { parse } from "csv/sync";
-
 import { csvDataType } from "./type";
 
 const csvFilePath = "./game_stats.csv";
@@ -9,7 +8,7 @@ const csvFilePath = "./game_stats.csv";
 const csvData = fs.readFileSync(csvFilePath, "utf-8");
 
 // Parse the CSV data synchronously
-const parsedData = parse(csvData, {
+const parsedData: csvDataType = parse(csvData, {
    delimiter: ",",
    skip_empty_lines: true,
    skip_records_with_error: true,
@@ -33,9 +32,11 @@ const parsedData = parse(csvData, {
    trim: true,
 });
 
-// Filter out records with missing values
-const filteredData = parsedData.filter((record: any) => {
-   return Object.values(record).every((value) => !!value);
-});
+// Filter out records with missing values and it based on date
+const filteredData = parsedData
+   .filter((record: any) => {
+      return Object.values(record).every((value) => !!value);
+   })
+   .sort((a, b) => +b.bid_date - +a.bid_date);
 
-export default filteredData as csvDataType;
+export default filteredData;

@@ -3,7 +3,7 @@ import { getWinningBids } from "./util";
 
 const WINNING_BIDS = getWinningBids(csvData);
 
-const LATEST_WIN = WINNING_BIDS.at(-1) as number;
+const LATEST_WIN = WINNING_BIDS[0];
 
 let array1 = [3];
 let array2 = [0, 1, 2, 3, 4, 5, 6, 7];
