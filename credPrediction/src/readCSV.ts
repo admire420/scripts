@@ -1,6 +1,8 @@
 const fs = require("fs");
 import { parse } from "csv/sync";
 
+import { csvDataType } from "./type";
+
 const csvFilePath = "./game_stats.csv";
 
 // Read the CSV file synchronously
@@ -36,4 +38,4 @@ const filteredData = parsedData.filter((record: any) => {
    return Object.values(record).every((value) => !!value);
 });
 
-export default filteredData;
+export default filteredData as csvDataType;

@@ -1,12 +1,7 @@
-import "./util";
+import csvData from "./readCSV";
+import { getWinningBids } from "./util";
 
-const WINNING_BIDS = [
-   4574, 3735, 5586, 2668, 5685, 5355, 6152, 2320, 1656, 2067, 3708, 5254, 2615,
-   3968, 4046, 5122, 1559, 3024, 1686, 3660, 3203, 4068, 4465, 2440, 4306, 4704,
-   1828, 5453, 1613, 3967, 2062, 3708, 1526, 4171, 2620, 4684, 3356, 1293, 3523,
-   4396, 3836, 1595, 2263, 4346, 4604, 5057, 6356, 6846, 8660, 1928, 4760, 3936,
-   5315, 6558,
-];
+const WINNING_BIDS = getWinningBids(csvData);
 
 const LATEST_WIN = WINNING_BIDS.at(-1) as number;
 

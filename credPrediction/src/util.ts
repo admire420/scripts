@@ -1,3 +1,6 @@
-import csvData from "./readCSV";
+import { csvDataType } from "./type";
 
-console.log(csvData);
+const getWinningBids = (data: csvDataType) =>
+   data.map((record) => record.winning_bid);
+
+export { getWinningBids };
