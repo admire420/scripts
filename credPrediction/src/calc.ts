@@ -1,3 +1,7 @@
+import { WINNING_BIDS } from "./constants";
+
+const totalBids = WINNING_BIDS.length;
+
 const evenOdd = (bids: number[]) => {
    let e1234: number[] = [];
    let e1234exe0: number[] = [];
@@ -602,6 +606,215 @@ const findMin = (bids: number[]) => {
    };
 };
 
+const findConsicutiveRepeatingDigits = (bids: number[]) => {
+   let crd1: number[][] = [];
+   let crd2: number[][] = [];
+   let crd3: number[][] = [];
+   let crd4: number[][] = [];
+   let crd12: number[][] = [];
+   let crd13: number[][] = [];
+   let crd14: number[][] = [];
+   let crd24: number[][] = [];
+   let crd23: number[][] = [];
+   let crd34: number[][] = [];
+   let crd123: number[][] = [];
+   let crd234: number[][] = [];
+   let crd124: number[][] = [];
+   let crd134: number[][] = [];
+   let crd1234: number[][] = [];
+
+   for (let i = 0; i < bids.length - 1; i++) {
+      let bidA = bids[i];
+      let bidB = bids[i + 1];
+      let ad1 = Number(bidA.toString()[0]);
+      let ad2 = Number(bidA.toString()[1]);
+      let ad3 = Number(bidA.toString()[2]);
+      let ad4 = Number(bidA.toString()[3]);
+      let bd1 = Number(bidB.toString()[0]);
+      let bd2 = Number(bidB.toString()[1]);
+      let bd3 = Number(bidB.toString()[2]);
+      let bd4 = Number(bidB.toString()[3]);
+
+      //pattern is said to repeating if any digit of the pattern is repeating
+      if (ad1 == bd1) {
+         crd1.push([bidA, bidB]);
+      }
+      if (ad2 == bd2) {
+         crd2.push([bidA, bidB]);
+      }
+      if (ad3 == bd3) {
+         crd3.push([bidA, bidB]);
+      }
+      if (ad4 == bd4) {
+         crd4.push([bidA, bidB]);
+      }
+      if (ad1 == bd1 || ad2 == bd2) {
+         crd12.push([bidA, bidB]);
+      }
+      if (ad1 == bd1 || ad3 == bd3) {
+         crd13.push([bidA, bidB]);
+      }
+      if (ad1 == bd1 || ad4 == bd4) {
+         crd14.push([bidA, bidB]);
+      }
+      if (ad2 == bd2 || ad4 == bd4) {
+         crd24.push([bidA, bidB]);
+      }
+      if (ad2 == bd2 || ad3 == bd3) {
+         crd23.push([bidA, bidB]);
+      }
+      if (ad3 == bd3 || ad4 == bd4) {
+         crd34.push([bidA, bidB]);
+      }
+      if (ad1 == bd1 || ad2 == bd2 || ad3 == bd3) {
+         crd123.push([bidA, bidB]);
+      }
+      if (ad1 == bd1 || ad2 == bd2 || ad4 == bd4) {
+         crd124.push([bidA, bidB]);
+      }
+      if (ad1 == bd1 || ad3 == bd3 || ad4 == bd4) {
+         crd134.push([bidA, bidB]);
+      }
+      if (ad2 == bd2 || ad3 == bd3 || ad4 == bd4) {
+         crd234.push([bidA, bidB]);
+      }
+      if (ad1 == bd1 || ad2 == bd2 || ad3 == bd3 || ad4 == bd4) {
+         crd1234.push([bidA, bidB]);
+      }
+   }
+   return {
+      crd1,
+      crd2,
+      crd3,
+      crd4,
+      crd12,
+      crd13,
+      crd14,
+      crd24,
+      crd23,
+      crd34,
+      crd123,
+      crd234,
+      crd124,
+      crd134,
+      crd1234,
+   };
+};
+
+// generate array from start->end with interval or a array from start with count with intervals
+const generateDynamicArray = ({
+   interval = 1,
+   start = 1,
+   end,
+   count,
+}: {
+   interval?: number;
+   start?: number;
+   end?: number;
+   count?: number;
+}) => {
+   const arr: number[] = new Array();
+   if (count && !end) {
+      for (let i = start; i < start + interval * count; i = i + interval) {
+         arr.push(i);
+      }
+   }
+   if (end && !count) {
+      for (let i = start; i <= end; i = i + interval) {
+         arr.push(i);
+      }
+   }
+   return arr;
+};
+
+const findConsicutiveRepeating = (bids: number[], shift = 1) => {
+   const getAllCombinations = (arr: number[], N: number) => {
+      const selections: number[] = [];
+
+      function backtrack(currSelection: number[], start: number): void {
+         if (currSelection.length === N) {
+            selections.push(Number([...currSelection].join(""))); // Make a copy of the selection
+            return;
+         }
+
+         for (let i = start; i < arr.length; i++) {
+            currSelection.push(arr[i]);
+            backtrack(currSelection, i + 1);
+            currSelection.pop();
+         }
+      }
+
+      backtrack([], 0);
+
+      return selections;
+   };
+
+   let data: {
+      [key: string]: { val: number[][]; count: number };
+   } = {};
+   //
+
+   //bid length range - set
+   for (let i = 1; i <= 4; i++) {
+      for (let j = 1; j <= 4; j++) {
+         // for all the values of i,j find the nCi * nCj
+         const left = getAllCombinations([1, 2, 3, 4], i);
+         const right = getAllCombinations([1, 2, 3, 4], j);
+         for (let k = 0; k < left.length; k++) {
+            for (let m = 0; m < right.length; m++) {
+               data[`cr${left[k]}cr${right[m]}`] = { count: 0, val: [] };
+            }
+         }
+      }
+   }
+
+   for (let i = 0; i < bids.length - shift; i++) {
+      let bidA = bids[i];
+      let bidB = bids[i + shift];
+
+      Object.keys(data).forEach((key) => {
+         const conditions = key.split("cr").filter((key) => !!key);
+         const condition1 = conditions[0];
+         const condition2 = conditions[1];
+
+         const getConditionArray = (num: string) => {
+            const output = [];
+            for (let i = 0; i < num.length; i++) {
+               output.push(Number(num[i]));
+            }
+            return output;
+         };
+
+         const condition1Array: number[] = getConditionArray(condition1);
+         const condition2Array: number[] = getConditionArray(condition2);
+         const selctedCondition1: number[] = [];
+         const selctedCondition2: number[] = [];
+
+         condition1Array.forEach((num) => {
+            selctedCondition1.push(Number(bidA.toString()[num - 1]));
+         });
+         condition2Array.forEach((num) => {
+            selctedCondition2.push(Number(bidB.toString()[num - 1]));
+         });
+
+         if (
+            selctedCondition1.some((item) => selctedCondition2.includes(item))
+         ) {
+            data[key].count++;
+            data[key].val.push([bidA, bidB]);
+         }
+      });
+   }
+
+   const filteredData = Object.keys(data)
+      .sort((a, b) => {
+         return data[b].count - data[a].count;
+      })
+      .filter((_, i) => i < 20);
+
+   return { data, filteredData };
+};
+
 export default evenOdd;
 export {
    findRepeatingBids,
@@ -609,6 +822,8 @@ export {
    findRepeatingPattern,
    findStartsWith,
    findAllStartsWith,
+   findConsicutiveRepeatingDigits,
+   findConsicutiveRepeating,
    findAvg,
    findMax,
    findMin,

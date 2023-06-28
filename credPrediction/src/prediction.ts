@@ -1,19 +1,22 @@
 const fs = require("fs");
 import { WINNING_BIDS } from "./constants";
 import { findRepeatingBids } from "./calc";
-import {
-   LATEST_WIN,
-   TOTAL_PREDICTIONS,
-   array1,
-   array2,
-   array3,
-   array4,
-} from "./constants";
-type count = {
-   [key: number]: number;
-};
+import { TOTAL_PREDICTIONS, array1, array2, array3, array4 } from "./constants";
 
 const REPEATING_BIDS = findRepeatingBids(WINNING_BIDS);
+const lastBidNumbers = WINNING_BIDS[0]
+   .toString()
+   .split("")
+   .map((num) => Number(num));
+const secondLastBidNumbers = WINNING_BIDS[1]
+   .toString()
+   .split("")
+   .map((num) => Number(num));
+
+//find the unique set of last two digit
+const previousUniqueSetOn2 = [
+   ...new Set([...lastBidNumbers, ...secondLastBidNumbers]),
+];
 
 const predictionCondition2 = (
    d1: number,
@@ -21,6 +24,10 @@ const predictionCondition2 = (
    d3: number,
    d4: number
 ) => {
+   const cr234cr1234in2 = [d2, d3, d4].some((num) =>
+      previousUniqueSetOn2.includes(num)
+   );
+
    const repeating = new Set([d1, d2, d3, d4]).size != 4;
    const r12 = d1 == d2;
    const r23 = d2 == d3;
@@ -100,7 +107,7 @@ const predictionCondition2 = (
 
    let yes =
       // Only accept repeating numbers*
-      repeating && (d1Repeating || d2Repeating);
+      repeating && (d1Repeating || d2Repeating) && cr234cr1234in2;
    let no =
       // Avoid Certain Repeating Patterns
       r123 ||
@@ -241,17 +248,6 @@ const testPredictions = (bids: number[]) => {
    return ((count / bids.length) * 100).toFixed(2);
 };
 
-let digit2 = Number(LATEST_WIN.toString()[1]);
-let digit3 = Number(LATEST_WIN.toString()[2]);
-let digit4 = Number(LATEST_WIN.toString()[3]);
-
-// console.log(array2hasdigit2, array3hasdigit3, array4hasdigit4);
-
-// remove repeating digits
-array2.splice(array2.indexOf(digit2), 1);
-array3.splice(array3.indexOf(digit3), 1);
-array4.splice(array4.indexOf(digit4), 1);
-
 const result = getPredictions(array1, array2, array3, array4);
 
 // console.log(array1, array2, array3, array4);
@@ -266,29 +262,30 @@ const outputPredictions = (result: number[][]) => {
 
 // Prediction Accuracy
 console.log(
-   "Prediction on Total Winning Bids :" + testPredictions(WINNING_BIDS) + "%"
+   "Prediction on Total Winning Bids :",
+   Number(testPredictions(WINNING_BIDS)),
+   "%"
 );
 console.log(
-   "Prediction on Repeating Winning Bids :" +
-      testPredictions(REPEATING_BIDS) +
-      "%"
+   "Prediction on Repeating Winning Bids :",
+   Number(testPredictions(REPEATING_BIDS)),
+   "%"
 );
-console.log("Total Slots Possible :" + TOTAL_PREDICTIONS);
+console.log("Total Slots Possible :", TOTAL_PREDICTIONS);
+console.log("Total Slots Required :", result.length);
 console.log(
-   "Total Slots Required :" +
-      result.length +
-      " which is " +
-      ((result.length / TOTAL_PREDICTIONS) * 100).toFixed(2) +
-      "% of the total"
+   "Percentage Elimination :",
+   Number((100 - (result.length / TOTAL_PREDICTIONS) * 100).toFixed(2)),
+   "% of the total"
 );
 console.log(
-   "Number of cards to draw :" +
-      Math.floor(result.length / 6) +
-      " sets and " +
-      (result.length % 6) +
-      " slots"
+   "Number of cards to draw :",
+   Math.floor(result.length / 6),
+   "sets and",
+   result.length % 6,
+   "slots"
 );
-console.log("Minimum Number of Players :" + Math.ceil(result.length / (6 * 5)));
+console.log("Minimum Number of Players :", Math.ceil(result.length / (6 * 5)));
 // print to file
 outputPredictions(result);
 
