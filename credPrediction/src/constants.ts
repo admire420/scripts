@@ -6,7 +6,7 @@ const WINNING_BIDS: number[] = getWinningBids(csvData);
 const LATEST_WIN = WINNING_BIDS[0];
 
 let array1 = [4];
-let array2 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+let array2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 let array3 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 let array4 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
